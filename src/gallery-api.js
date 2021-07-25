@@ -9,9 +9,16 @@ export default class GalleryApiService {
         fetch(`${url}?key=${key}&q=${this.searchQuery}&image_type=photo&orintation=horizontal&safesearch=true&page=${this.page}`)
             .then(response => response.json())
             .then(data => {
-                this.page += 1;
+                this.incrementPage();
                 console.log(data)
             });
+    }
+
+    incrementPage(){
+    this.page +=1
+    }
+    resetPage() {
+        this.page = 1
     }
 
 
@@ -23,3 +30,5 @@ export default class GalleryApiService {
         this.searchQuery = newQuery;
     }
 }
+
+

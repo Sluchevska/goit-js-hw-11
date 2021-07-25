@@ -14,7 +14,7 @@ refs.searchForm.addEventListener('submit', onSearch);
 function onSearch(e) {
     e.preventDefault();
    galleryApiService.query = e.currentTarget.elements.searchQuery.value
-   
+   galleryApiService.resetPage()
     galleryApiService.fetchArticles()
 
     
