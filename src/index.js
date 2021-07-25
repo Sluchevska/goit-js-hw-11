@@ -54,7 +54,7 @@ async function onLoadMore() {
     const allDivs = refs.galleryHolder.querySelectorAll('.photo-card')
     console.log(allDivs.length)
 
-    if (allDivs.length === result.totalHits) {
+    if (allDivs.length >= result.totalHits) {
         Notify.failure("We're sorry, but you've reached the end of search results");
         console.log(result.hits.length) 
     } else 
