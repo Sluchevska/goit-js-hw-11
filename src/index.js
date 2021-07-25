@@ -1,5 +1,6 @@
 import './sass/main.scss';
 import GalleryApiService from './gallery-api';
+import articlesTpl from './template.hbs';
 import { Notify } from 'notiflix';
 const refs = {
     searchForm: document.querySelector('.search-form'),
@@ -11,21 +12,24 @@ const refs = {
 const galleryApiService = new GalleryApiService()
 
 refs.searchForm.addEventListener('submit', onSearch);
+refs.loadMoreBtn.addEventListener('click', onLoadMore);
+
 function onSearch(e) {
     e.preventDefault();
    galleryApiService.query = e.currentTarget.elements.searchQuery.value
    galleryApiService.resetPage()
-    galleryApiService.fetchArticles()
-
-    
-
-     
+    galleryApiService.fetchArticles().then(appendArticlesMarkup)
+        // .then(hits => console.log(hits))
 
 }
-refs.loadMoreBtn.addEventListener('click', onLoadMore);
+
 
 function onLoadMore() {
-   galleryApiService.fetchArticles() 
+   galleryApiService.fetchArticles().then(appendArticlesMarkup)
+}
+
+function appendArticlesMarkup(hits) {
+    refs.galleryHolder.insertAdjacentHTML('beforeend', articlesTpl(hits))
 }
 
 

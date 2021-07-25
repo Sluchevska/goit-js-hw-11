@@ -10,7 +10,9 @@ export default class GalleryApiService {
             .then(response => response.json())
             .then(data => {
                 this.incrementPage();
-                console.log(data)
+               
+                return data.hits;
+               
             });
     }
 
