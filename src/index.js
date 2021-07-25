@@ -15,9 +15,10 @@ const refs = {
 
 
 const galleryApiService = new GalleryApiService()
- var lightbox = new SimpleLightbox('.photo-card a');
+//  var lightbox = new SimpleLightbox('.photo-card a');
 refs.searchForm.addEventListener('submit', onSearch);
 refs.loadMoreBtn.addEventListener('click', onLoadMore);
+
 refs.loadMoreBtn.classList.add('is-hidden')
 
 
