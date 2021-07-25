@@ -19,7 +19,8 @@ const galleryApiService = new GalleryApiService()
 refs.searchForm.addEventListener('submit', onSearch);
 refs.loadMoreBtn.addEventListener('click', onLoadMore);
 refs.loadMoreBtn.classList.add('is-hidden')
-// refs.loadMoreBtn.disabled = false;
+
+
    
 
 async function onSearch(e) {
@@ -55,12 +56,15 @@ async function onLoadMore() {
     console.log(allDivs.length)
 
     if (allDivs.length >= result.totalHits) {
+        // refs.loadMoreBtn.disabled = true
+         refs.loadMoreBtn.classList.add('is-hidden')
         Notify.failure("We're sorry, but you've reached the end of search results");
         console.log(result.hits.length) 
     } else 
 
         appendArticlesMarkup(result.hits)
     refs.loadMoreBtn.classList.remove('is-hidden')
+    // refs.loadMoreBtn.disabled = false
     
   
 }
