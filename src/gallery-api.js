@@ -4,11 +4,13 @@ export default class GalleryApiService {
         this.page = 1;
     }
     fetchArticles() {
+        
         const url = 'https://pixabay.com/api/'
         const key = '22597300-51a9bfff07e627635843c3062'
         return fetch(`${url}?key=${key}&q=${this.searchQuery}&image_type=photo&orintation=horizontal&safesearch=true&page=${this.page}&per_page=40`)
             .then(response => response.json())
             .then(data => {
+
                 this.incrementPage();
                
                 return data.hits;

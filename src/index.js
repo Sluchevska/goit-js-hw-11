@@ -2,7 +2,7 @@ import './sass/main.scss';
 import GalleryApiService from './gallery-api';
 import articlesTpl from './template.hbs';
 import { Notify } from 'notiflix';
-const axios = require('axios').default;
+import axios from 'axios';
 import SimpleLightbox from 'simplelightbox'
 const refs = {
     searchForm: document.querySelector('.search-form'),
@@ -22,17 +22,13 @@ async function onSearch(e) {
     e.preventDefault();
     
     galleryApiService.query = e.currentTarget.elements.searchQuery.value
-    if (galleryApiService.query === '') {
+    if (galleryApiService.query.trim() === '') {
        clearArticlesContainer()
       Notify.info('Sorry, there are no images matching your search query. Please try again');  
     } else {
-        
-        
         galleryApiService.resetPage()
-   
         galleryApiService.fetchArticles().then(hits => {
-      
- clearArticlesContainer()
+             clearArticlesContainer()
             appendArticlesMarkup(hits)
             refs.loadMoreBtn.classList.remove('is-hidden')
 //                   var gallery = $('.photo-card a').simpleLightbox();
