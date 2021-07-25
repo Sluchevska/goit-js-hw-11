@@ -9,7 +9,10 @@ const refs = {
     galleryHolder: document.querySelector('.gallery'),
     loadMoreBtn: document.querySelector('.load-more'),
     
+    
+    
 }
+
 
 const galleryApiService = new GalleryApiService()
  var lightbox = new SimpleLightbox('.photo-card a');
@@ -21,12 +24,16 @@ refs.loadMoreBtn.classList.add('is-hidden')
 
 async function onSearch(e) {
     e.preventDefault();
+           
+
 
     galleryApiService.query = e.currentTarget.elements.searchQuery.value
     const result = await galleryApiService.fetchArticles()
+    
     console.log(result)
     if (galleryApiService.query.trim() === '') {
-       clearArticlesContainer()
+
+        clearArticlesContainer()
       Notify.info('Sorry, there are no images matching your search query. Please try again');  
     } else {
         
@@ -38,18 +45,24 @@ async function onSearch(e) {
         // SimpleLightbox.refresh()
         
     }
-       
 
 }
 
 async function onLoadMore() {
     refs.loadMoreBtn.classList.add('is-hidden')
-   galleryApiService.fetchArticles().then(hits => {
+    const result = await galleryApiService.fetchArticles()
+    const allDivs = refs.galleryHolder.querySelectorAll('.photo-card')
+    console.log(allDivs.length)
 
-            appendArticlesMarkup(hits)
-       refs.loadMoreBtn.classList.remove('is-hidden')
-       
-        })
+    if (allDivs.length === result.totalHits) {
+        Notify.failure("We're sorry, but you've reached the end of search results");
+        console.log(result.hits.length) 
+    } else 
+
+        appendArticlesMarkup(result.hits)
+    refs.loadMoreBtn.classList.remove('is-hidden')
+    
+  
 }
 
 function appendArticlesMarkup(hits) {
