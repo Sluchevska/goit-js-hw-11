@@ -2,6 +2,8 @@ import './sass/main.scss';
 import GalleryApiService from './gallery-api';
 import articlesTpl from './template.hbs';
 import { Notify } from 'notiflix';
+const axios = require('axios').default;
+import SimpleLightbox from 'simplelightbox'
 const refs = {
     searchForm: document.querySelector('.search-form'),
     galleryHolder: document.querySelector('.gallery'),
@@ -14,9 +16,9 @@ const galleryApiService = new GalleryApiService()
 refs.searchForm.addEventListener('submit', onSearch);
 refs.loadMoreBtn.addEventListener('click', onLoadMore);
 refs.loadMoreBtn.classList.add('is-hidden')
+// refs.loadMoreBtn.disabled = false;
 
-
-function onSearch(e) {
+async function onSearch(e) {
     e.preventDefault();
     
     galleryApiService.query = e.currentTarget.elements.searchQuery.value
@@ -29,9 +31,12 @@ function onSearch(e) {
         galleryApiService.resetPage()
    
         galleryApiService.fetchArticles().then(hits => {
+      
  clearArticlesContainer()
             appendArticlesMarkup(hits)
             refs.loadMoreBtn.classList.remove('is-hidden')
+//                   var gallery = $('.photo-card a').simpleLightbox();
+//   gallery.refresh()
            
         })
     }
@@ -39,7 +44,7 @@ function onSearch(e) {
 
 }
 
-function onLoadMore() {
+async function onLoadMore() {
     refs.loadMoreBtn.classList.add('is-hidden')
    galleryApiService.fetchArticles().then(hits => {
 
@@ -51,6 +56,7 @@ function onLoadMore() {
 
 function appendArticlesMarkup(hits) {
     refs.galleryHolder.insertAdjacentHTML('beforeend', articlesTpl(hits))
+  
 }
 
 function clearArticlesContainer() {
