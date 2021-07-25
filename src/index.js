@@ -20,22 +20,30 @@ function onSearch(e) {
     
     galleryApiService.query = e.currentTarget.elements.searchQuery.value
     if (galleryApiService.query === '') {
-       
+       clearArticlesContainer()
       Notify.info('Sorry, there are no images matching your search query. Please try again');  
     } else {
         // refs.loadMoreBtn.disabled = true;
-        refs.loadMoreBtn.classList.remove('is-hidden')
+        
         galleryApiService.resetPage()
-    clearArticlesContainer()
-    galleryApiService.fetchArticles().then(appendArticlesMarkup)
+   
+        galleryApiService.fetchArticles().then(hits => {
+ clearArticlesContainer()
+            appendArticlesMarkup(hits)
+            refs.loadMoreBtn.classList.remove('is-hidden')
+        })
     }
        
 
 }
 
-
 function onLoadMore() {
-   galleryApiService.fetchArticles().then(appendArticlesMarkup)
+    refs.loadMoreBtn.classList.add('is-hidden')
+   galleryApiService.fetchArticles().then(hits => {
+
+            appendArticlesMarkup(hits)
+            refs.loadMoreBtn.classList.remove('is-hidden')
+        })
 }
 
 function appendArticlesMarkup(hits) {
