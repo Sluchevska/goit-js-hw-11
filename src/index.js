@@ -15,6 +15,7 @@ refs.searchForm.addEventListener('submit', onSearch);
 refs.loadMoreBtn.addEventListener('click', onLoadMore);
 refs.loadMoreBtn.classList.add('is-hidden')
 
+
 function onSearch(e) {
     e.preventDefault();
     
@@ -23,7 +24,7 @@ function onSearch(e) {
        clearArticlesContainer()
       Notify.info('Sorry, there are no images matching your search query. Please try again');  
     } else {
-        // refs.loadMoreBtn.disabled = true;
+        
         
         galleryApiService.resetPage()
    
@@ -31,6 +32,7 @@ function onSearch(e) {
  clearArticlesContainer()
             appendArticlesMarkup(hits)
             refs.loadMoreBtn.classList.remove('is-hidden')
+           
         })
     }
        
@@ -42,7 +44,8 @@ function onLoadMore() {
    galleryApiService.fetchArticles().then(hits => {
 
             appendArticlesMarkup(hits)
-            refs.loadMoreBtn.classList.remove('is-hidden')
+       refs.loadMoreBtn.classList.remove('is-hidden')
+       
         })
 }
 
