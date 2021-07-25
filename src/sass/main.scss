@@ -12,7 +12,6 @@ body {
 }
 
 .photo-card {
-  height: 450px;
   overflow: hidden;
 }
 .photo-card img {
@@ -37,6 +36,10 @@ body {
   display: block;
   margin-left: auto;
   margin-right: auto;
+  padding: 20px 40px;
+  font-size: 16px;
+  font-weight: 700;
+  background-color: rgb(40, 164, 247);
 }
 
 .load-more.is-hidden {
@@ -49,8 +52,14 @@ body {
   grid-gap: 20px;
   padding: 0;
   margin: 0;
-  max-width: calc(100vw-80px);
+  max-width: calc(100vw - 80px);
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 30px;
+}
+
+.info {
+  font-size: 12px;
+  font-weight: 400;
+  text-align: center;
 }
