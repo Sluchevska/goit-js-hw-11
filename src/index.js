@@ -1,11 +1,33 @@
 import './sass/main.scss';
+import GalleryApiService from './gallery-api';
 import { Notify } from 'notiflix';
+const refs = {
+    searchForm: document.querySelector('.search-form'),
+    galleryHolder: document.querySelector('.gallery'),
+    loadMoreBtn: document.querySelector('.load-more'),
+    
+}
 
-const url = 'https://pixabay.com/api/'
-const key = '22597300-51a9bfff07e627635843c3062'
+const galleryApiService = new GalleryApiService()
+
+refs.searchForm.addEventListener('submit', onSearch);
+function onSearch(e) {
+    e.preventDefault();
+   galleryApiService.query = e.currentTarget.elements.searchQuery.value
+   
+    galleryApiService.fetchArticles()
+
+    
+
+     
+
+}
+refs.loadMoreBtn.addEventListener('click', onLoadMore);
+
+function onLoadMore() {
+   galleryApiService.fetchArticles() 
+}
 
 
 
-fetch(`${url}?key=${key}`)
-    .then(response = response.json())
-    .then(console.log);
+
