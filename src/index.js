@@ -12,29 +12,31 @@ const refs = {
 }
 
 const galleryApiService = new GalleryApiService()
-
+ var lightbox = new SimpleLightbox('.photo-card a');
 refs.searchForm.addEventListener('submit', onSearch);
 refs.loadMoreBtn.addEventListener('click', onLoadMore);
 refs.loadMoreBtn.classList.add('is-hidden')
 // refs.loadMoreBtn.disabled = false;
+   
 
 async function onSearch(e) {
     e.preventDefault();
-    
+
     galleryApiService.query = e.currentTarget.elements.searchQuery.value
+    const result = await galleryApiService.fetchArticles()
+    console.log(result)
     if (galleryApiService.query.trim() === '') {
        clearArticlesContainer()
       Notify.info('Sorry, there are no images matching your search query. Please try again');  
     } else {
+        
         galleryApiService.resetPage()
-        galleryApiService.fetchArticles().then(hits => {
-             clearArticlesContainer()
-            appendArticlesMarkup(hits)
-            refs.loadMoreBtn.classList.remove('is-hidden')
-//                   var gallery = $('.photo-card a').simpleLightbox();
-//   gallery.refresh()
-           
-        })
+        Notify.success(`Hooray! We found ${result.totalHits} images.`);
+        clearArticlesContainer()
+        refs.loadMoreBtn.classList.remove('is-hidden')
+        appendArticlesMarkup(result.hits)
+        // SimpleLightbox.refresh()
+        
     }
        
 
