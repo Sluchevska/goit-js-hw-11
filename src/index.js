@@ -4,6 +4,8 @@ import articlesTpl from './template.hbs';
 import { Notify } from 'notiflix';
 import axios from 'axios';
 import SimpleLightbox from 'simplelightbox'
+import '../node_modules/simplelightbox/src/simple-lightbox.scss';
+
 const refs = {
     searchForm: document.querySelector('.search-form'),
     galleryHolder: document.querySelector('.gallery'),
@@ -15,7 +17,7 @@ const refs = {
 
 
 const galleryApiService = new GalleryApiService()
-//  var lightbox = new SimpleLightbox('.photo-card a');
+const lightbox = new SimpleLightbox('.photo-card a');
 refs.searchForm.addEventListener('submit', onSearch);
 refs.loadMoreBtn.addEventListener('click', onLoadMore);
 
@@ -53,6 +55,7 @@ async function onSearch(e) {
 async function onLoadMore() {
     refs.loadMoreBtn.classList.add('is-hidden')
     const result = await galleryApiService.fetchArticles()
+    lightbox.refresh();
     const allDivs = refs.galleryHolder.querySelectorAll('.photo-card')
     console.log(allDivs.length)
 
@@ -64,6 +67,7 @@ async function onLoadMore() {
     } else 
 
         appendArticlesMarkup(result.hits)
+    smoothScroll(result.hits)
     refs.loadMoreBtn.classList.remove('is-hidden')
     // refs.loadMoreBtn.disabled = false
     
@@ -72,6 +76,7 @@ async function onLoadMore() {
 
 function appendArticlesMarkup(hits) {
     refs.galleryHolder.insertAdjacentHTML('beforeend', articlesTpl(hits))
+    lightbox.refresh();
   
 }
 
@@ -79,8 +84,13 @@ function clearArticlesContainer() {
     refs.galleryHolder.innerHTML = ''
 }
 
-
-
+function smoothScroll() {
+    const { height: cardHeight } = document.querySelector('.gallery').firstElementChild.getBoundingClientRect();
+    window.scrollBy({
+        top: cardHeight * 2,
+        behavior: 'smooth',
+    })
+}
 
 
 
