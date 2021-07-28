@@ -14,8 +14,9 @@ body {
 .photo-card {
   overflow: hidden;
   border-radius: 5px;
-  border: 3px solid purple;
+  // border: 3px solid rgb(245, 106, 245);
   background-color: rgb(252, 216, 238);
+  box-shadow: 5px 5px 10px 0px rgba(34, 60, 80, 0.2);
 }
 .photo-card img {
   display: block;
@@ -63,7 +64,11 @@ body {
 }
 
 .info {
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 400;
   text-align: center;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+  width: 100%;
 }
